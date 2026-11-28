@@ -714,8 +714,14 @@ const GRAINIENT_LIGHT_CONFIG = {
   lightMode: false
 };
 
+const GRAINIENT_PURPLE_CONFIG = {
+  colors: ['#07000e', '#160028', '#3b0764', '#6b21a8', '#a855f7', '#e9d5ff'],
+  lightMode: false
+};
+
 function getGrainientConfig(theme) {
   const currentTheme = theme || document.documentElement.getAttribute('data-theme') || 'dark';
+  if (currentTheme === 'purple') return GRAINIENT_PURPLE_CONFIG;
   return currentTheme === 'light' ? GRAINIENT_LIGHT_CONFIG : GRAINIENT_DARK_CONFIG;
 }
 

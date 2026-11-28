@@ -16,7 +16,7 @@
    */
   function getPreferredTheme() {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved === 'light' || saved === 'dark') {
+    if (saved === 'light' || saved === 'dark' || saved === 'purple') {
       return saved;
     }
     // Default to dark for cybersecurity portfolio identity
@@ -24,23 +24,43 @@
   }
 
   /**
+   * Show secret HUD notification toast
+   */
+  function showThemeToast(text) {
+    let toast = document.getElementById('secretThemeToast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'secretThemeToast';
+      toast.className = 'secret-theme-toast';
+      document.body.appendChild(toast);
+    }
+    toast.innerHTML = `<span class="toast-dot"></span><span>${text}</span><span class="toast-key">[Ctrl+Shift+A]</span>`;
+    toast.classList.add('visible');
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(() => {
+      toast.classList.remove('visible');
+    }, 2500);
+  }
+
+  /**
    * Update the DOM and notify listeners
    */
   function applyTheme(theme) {
     document.documentElement.setAttribute(THEME_ATTR, theme);
-    document.documentElement.style.colorScheme = theme;
+    document.documentElement.style.colorScheme = theme === 'light' ? 'light' : 'dark';
 
     // Update all theme toggle buttons on the page
     document.querySelectorAll('.theme-toggle').forEach((btn) => {
       const isLight = theme === 'light';
+      const isPurple = theme === 'purple';
       btn.setAttribute('aria-pressed', isLight ? 'true' : 'false');
       btn.setAttribute(
         'aria-label',
-        isLight ? 'Switch to dark theme' : 'Switch to light theme'
+        isPurple ? 'Secret Purple Theme Active' : isLight ? 'Switch to dark theme' : 'Switch to light theme'
       );
       btn.setAttribute(
         'title',
-        isLight ? 'Switch to dark mode' : 'Switch to light mode'
+        isPurple ? 'Secret Purple Theme (Ctrl+Shift+A to toggle)' : isLight ? 'Switch to dark mode' : 'Switch to light mode'
       );
     });
 
@@ -53,6 +73,7 @@
    */
   function switchThemeWithAnimation(newTheme, clickX, clickY) {
     const isDark = newTheme === 'dark';
+    const isPurple = newTheme === 'purple';
     const x = clickX ?? window.innerWidth / 2;
     const y = clickY ?? window.innerHeight / 2;
 
@@ -110,7 +131,7 @@
     ripple.style.height = `${endRadius * 2.2}px`;
     ripple.style.marginLeft = `-${endRadius * 1.1}px`;
     ripple.style.marginTop = `-${endRadius * 1.1}px`;
-    ripple.style.backgroundColor = isDark ? '#000000' : '#F4F4F6';
+    ripple.style.backgroundColor = isPurple ? '#07000e' : (isDark ? '#000000' : '#F4F4F6');
 
     document.body.appendChild(ripple);
 
@@ -130,7 +151,7 @@
   }
 
   /**
-   * Toggle between dark and light
+   * Toggle between dark and light (clicking UI button)
    */
   function toggleTheme(event) {
     const current = document.documentElement.getAttribute(THEME_ATTR) || 'dark';
@@ -151,6 +172,26 @@
     switchThemeWithAnimation(next, x, y);
   }
 
+  /**
+   * Secret toggle: Ctrl + Shift + A to fully purple theme
+   */
+  let lastNonPurpleTheme = localStorage.getItem('last-non-purple-theme') || 'dark';
+
+  function togglePurpleTheme() {
+    const current = document.documentElement.getAttribute(THEME_ATTR) || 'dark';
+    let next;
+    if (current === 'purple') {
+      next = (lastNonPurpleTheme === 'light' || lastNonPurpleTheme === 'dark') ? lastNonPurpleTheme : 'dark';
+      showThemeToast('PROTOCOL RESTORED: STANDARD THEME');
+    } else {
+      lastNonPurpleTheme = current;
+      localStorage.setItem('last-non-purple-theme', current);
+      next = 'purple';
+      showThemeToast('SECRET PROTOCOL: CYBER PURPLE ENGAGED');
+    }
+    switchThemeWithAnimation(next);
+  }
+
   // Initialize theme as soon as DOM is ready
   function init() {
     const currentTheme = getPreferredTheme();
@@ -161,8 +202,17 @@
       btn.addEventListener('click', toggleTheme);
     });
 
-    // Also support keyboard shortcut: Alt + T
+    // Keyboard shortcuts:
     window.addEventListener('keydown', (e) => {
+      // Secret purple theme shortcut: Ctrl + Shift + A or Cmd + Shift + A
+      const isCtrlOrCmd = e.ctrlKey || e.metaKey;
+      if (isCtrlOrCmd && e.shiftKey && (e.code === 'KeyA' || e.key.toLowerCase() === 'a')) {
+        e.preventDefault();
+        togglePurpleTheme();
+        return;
+      }
+
+      // Standard theme toggle: Alt + T
       if (e.altKey && (e.key === 't' || e.key === 'T')) {
         e.preventDefault();
         toggleTheme();
@@ -186,6 +236,7 @@
   // Export to window for programmatic control
   window.PortfolioTheme = {
     toggle: toggleTheme,
+    togglePurple: togglePurpleTheme,
     set: (theme) => switchThemeWithAnimation(theme),
     get: () => document.documentElement.getAttribute(THEME_ATTR) || 'dark'
   };

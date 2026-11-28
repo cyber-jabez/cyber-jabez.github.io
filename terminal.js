@@ -703,14 +703,15 @@ Tip: Try typing 'matrix' for cyber visualizer, or 'theme light' / 'theme dark' t
     let nextTheme = currentTheme;
     if (mode === 'dark') nextTheme = 'dark';
     else if (mode === 'light') nextTheme = 'light';
-    else if (mode === 'toggle') nextTheme = currentTheme === 'light' ? 'dark' : 'light';
+    else if (mode === 'purple') nextTheme = 'purple';
+    else if (mode === 'toggle') nextTheme = currentTheme === 'purple' ? 'dark' : (currentTheme === 'light' ? 'dark' : 'light');
     else {
-      printOutput(`usage: theme [dark | light | toggle] (currently: ${currentTheme})`, true);
+      printOutput(`usage: theme [dark | light | purple | toggle] (currently: ${currentTheme})`, true);
       return;
     }
 
     document.documentElement.setAttribute('data-theme', nextTheme);
-    document.documentElement.style.colorScheme = nextTheme;
+    document.documentElement.style.colorScheme = nextTheme === 'light' ? 'light' : 'dark';
     localStorage.setItem('portfolio-theme', nextTheme);
     window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: nextTheme } }));
 
