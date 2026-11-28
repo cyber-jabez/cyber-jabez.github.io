@@ -718,7 +718,6 @@ Tip: Try typing 'matrix' for cyber visualizer, or 'theme light' / 'theme dark' t
     } else {
       document.documentElement.setAttribute('data-theme', nextTheme);
       document.documentElement.style.colorScheme = nextTheme === 'light' ? 'light' : 'dark';
-      localStorage.setItem('portfolio-theme', nextTheme);
       window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: nextTheme } }));
     }
 

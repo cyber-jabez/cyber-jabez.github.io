@@ -13,13 +13,9 @@
 
   /**
    * Get the initial theme: saved in localStorage, or system preference, fallback to dark
+   * Requirement: Always load with dark theme on every refresh (no memory theme persistence)
    */
   function getPreferredTheme() {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved === 'light' || saved === 'dark' || saved === 'purple') {
-      return saved;
-    }
-    // Default to dark for cybersecurity portfolio identity
     return 'dark';
   }
 
@@ -86,7 +82,6 @@
     // If reduced motion is requested, switch immediately
     if (REDUCED_MOTION.matches) {
       applyTheme(newTheme);
-      localStorage.setItem(STORAGE_KEY, newTheme);
       return;
     }
 
@@ -94,7 +89,6 @@
     if (document.startViewTransition && typeof document.startViewTransition === 'function') {
       const transition = document.startViewTransition(() => {
         applyTheme(newTheme);
-        localStorage.setItem(STORAGE_KEY, newTheme);
       });
 
       transition.ready.then(() => {
@@ -117,7 +111,6 @@
       }).catch(() => {
         // Fallback in case of unexpected transition error
         applyTheme(newTheme);
-        localStorage.setItem(STORAGE_KEY, newTheme);
       });
       return;
     }
@@ -139,7 +132,6 @@
       ripple.classList.add('expanding');
       setTimeout(() => {
         applyTheme(newTheme);
-        localStorage.setItem(STORAGE_KEY, newTheme);
         ripple.classList.add('fading');
         setTimeout(() => {
           if (ripple.parentNode) {
@@ -200,8 +192,11 @@
 
   // Initialize theme as soon as DOM is ready
   function init() {
-    const currentTheme = getPreferredTheme();
-    applyTheme(currentTheme);
+    // Unconditionally initialize with standard dark theme on every refresh
+    applyTheme('dark');
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (e) {}
 
     // Bind all theme toggles
     document.querySelectorAll('.theme-toggle').forEach((btn) => {
