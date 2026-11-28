@@ -4549,3 +4549,340 @@ body.terminal-active .custom-cursor-dot {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.4; transform: scale(0.8); }
 }
+
+
+/* ==========================================================================
+   Cyberpunk Custom Right-Click Context Menu
+   ========================================================================== */
+
+.cyber-context-menu {
+  position: fixed;
+  z-index: 999998;
+  width: 298px;
+  max-width: calc(100vw - 20px);
+  max-height: calc(100vh - 24px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: rgba(10, 10, 14, 0.96);
+  border: 1px solid rgba(232, 39, 26, 0.38);
+  border-radius: 8px;
+  box-shadow: 0 20px 52px rgba(0, 0, 0, 0.92), 0 0 28px rgba(232, 39, 26, 0.22);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  padding: 6px 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.96) translateY(-4px);
+  transform-origin: top left;
+  transition: opacity 0.16s cubic-bezier(0.16, 1, 0.3, 1), transform 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+  user-select: none;
+}
+
+.cyber-context-menu.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1) translateY(0);
+}
+
+/* Custom Context Menu Scrollbar */
+.cyber-context-menu::-webkit-scrollbar {
+  width: 4px;
+}
+
+.cyber-context-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cyber-context-menu::-webkit-scrollbar-thumb {
+  background: rgba(232, 39, 26, 0.3);
+  border-radius: 2px;
+}
+
+.cyber-context-menu::-webkit-scrollbar-thumb:hover {
+  background: var(--scarlet);
+}
+
+/* Header */
+.ctx-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px 7px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 3px;
+}
+
+.ctx-header-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.ctx-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 8px #10B981;
+  animation: pulseGreen 2s infinite ease-in-out;
+}
+
+.ctx-title-text {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+  text-transform: uppercase;
+}
+
+.ctx-status-pill {
+  font-family: var(--mono);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--scarlet);
+  background: var(--scarlet-dim, rgba(232, 39, 26, 0.12));
+  border: 1px solid var(--scarlet-glow, rgba(232, 39, 26, 0.28));
+  padding: 2px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+/* Body & Groups */
+.ctx-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ctx-group {
+  padding: 2px 6px;
+}
+
+.ctx-group-label {
+  font-family: var(--mono);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--dim);
+  padding: 4px 8px 3px;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.ctx-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6.5px 8px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 11px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.14s ease, transform 0.14s ease, color 0.14s ease;
+  outline: none;
+}
+
+.ctx-item:hover,
+.ctx-item.focused {
+  background: var(--scarlet-dim, rgba(232, 39, 26, 0.15));
+  color: #FFFFFF;
+  transform: translateX(2px);
+}
+
+.ctx-icon {
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--dim);
+  transition: color 0.14s ease;
+}
+
+.ctx-icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.ctx-item:hover .ctx-icon,
+.ctx-item.focused .ctx-icon {
+  color: var(--scarlet);
+}
+
+.ctx-label {
+  flex-grow: 1;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ctx-key {
+  font-size: 9px;
+  font-family: var(--mono);
+  color: var(--dim);
+  opacity: 0.78;
+  letter-spacing: 0.05em;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 1px 5px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+  transition: background 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+}
+
+.ctx-item:hover .ctx-key,
+.ctx-item.focused .ctx-key {
+  background: rgba(232, 39, 26, 0.22);
+  border-color: rgba(232, 39, 26, 0.4);
+  color: #FFFFFF;
+  opacity: 1;
+}
+
+/* Distinct Highlight Items */
+.ctx-purple-action {
+  border-left: 2px solid #A855F7;
+}
+
+.ctx-purple-action:hover,
+.ctx-purple-action.focused {
+  background: rgba(168, 85, 247, 0.18) !important;
+  color: #FAF5FF !important;
+}
+
+.ctx-purple-action:hover .ctx-icon,
+.ctx-purple-action.focused .ctx-icon {
+  color: #C084FC !important;
+}
+
+.ctx-terminal-item {
+  border-left: 2px solid var(--scarlet);
+}
+
+/* Dividers & Footer */
+.ctx-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.07);
+  margin: 4px 10px;
+}
+
+.ctx-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 14px 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 3px;
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.08em;
+  color: var(--dim);
+  opacity: 0.65;
+}
+
+/* ==========================================================================
+   Context Menu Themes
+   ========================================================================== */
+
+/* Light Theme */
+[data-theme="light"] .cyber-context-menu {
+  background: rgba(246, 246, 248, 0.98);
+  border-color: rgba(217, 35, 23, 0.35);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.14), 0 0 20px rgba(217, 35, 23, 0.1);
+  color: #0C0D11;
+}
+
+[data-theme="light"] .ctx-header,
+[data-theme="light"] .ctx-divider,
+[data-theme="light"] .ctx-footer {
+  border-color: rgba(12, 13, 17, 0.08);
+}
+
+[data-theme="light"] .ctx-item:hover,
+[data-theme="light"] .ctx-item.focused {
+  background: rgba(217, 35, 23, 0.09);
+  color: #D92317;
+}
+
+[data-theme="light"] .ctx-key {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: #5C5E68;
+}
+
+[data-theme="light"] .ctx-item:hover .ctx-key,
+[data-theme="light"] .ctx-item.focused .ctx-key {
+  background: rgba(217, 35, 23, 0.15);
+  border-color: rgba(217, 35, 23, 0.3);
+  color: #D92317;
+}
+
+/* Secret Purple Theme */
+[data-theme="purple"] .cyber-context-menu {
+  background: rgba(13, 2, 29, 0.97) !important;
+  border-color: rgba(168, 85, 247, 0.6) !important;
+  box-shadow: 0 20px 54px rgba(0, 0, 0, 0.92), 0 0 32px rgba(168, 85, 247, 0.35) !important;
+  color: #FAF5FF !important;
+}
+
+[data-theme="purple"] .cyber-context-menu::-webkit-scrollbar-thumb {
+  background: rgba(168, 85, 247, 0.4) !important;
+}
+
+[data-theme="purple"] .cyber-context-menu::-webkit-scrollbar-thumb:hover {
+  background: #A855F7 !important;
+}
+
+[data-theme="purple"] .ctx-header,
+[data-theme="purple"] .ctx-divider,
+[data-theme="purple"] .ctx-footer {
+  border-color: rgba(168, 85, 247, 0.22) !important;
+}
+
+[data-theme="purple"] .ctx-pulse-dot {
+  background: #A855F7 !important;
+  box-shadow: 0 0 8px #A855F7 !important;
+}
+
+[data-theme="purple"] .ctx-status-pill {
+  color: #FAF5FF !important;
+  background: rgba(168, 85, 247, 0.2) !important;
+  border-color: rgba(168, 85, 247, 0.45) !important;
+}
+
+[data-theme="purple"] .ctx-item {
+  color: #FAF5FF !important;
+}
+
+[data-theme="purple"] .ctx-item:hover,
+[data-theme="purple"] .ctx-item.focused {
+  background: rgba(168, 85, 247, 0.2) !important;
+  color: #FAF5FF !important;
+}
+
+[data-theme="purple"] .ctx-item:hover .ctx-icon,
+[data-theme="purple"] .ctx-item.focused .ctx-icon {
+  color: #C084FC !important;
+}
+
+[data-theme="purple"] .ctx-key {
+  background: rgba(168, 85, 247, 0.15) !important;
+  border-color: rgba(168, 85, 247, 0.3) !important;
+  color: #E9D5FF !important;
+}
+
+[data-theme="purple"] .ctx-item:hover .ctx-key,
+[data-theme="purple"] .ctx-item.focused .ctx-key {
+  background: rgba(168, 85, 247, 0.3) !important;
+  border-color: rgba(168, 85, 247, 0.6) !important;
+  color: #FFFFFF !important;
+}
