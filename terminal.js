@@ -826,6 +826,8 @@ Tip: Try typing 'matrix' for cyber visualizer, or 'theme light' / 'theme dark' t
     // Secret purple theme shortcut: Ctrl + Shift + A or Cmd + Shift + A
     if (isCtrlOrCmd && e.shiftKey && (e.code === 'KeyA' || e.key.toLowerCase() === 'a')) {
       e.preventDefault();
+      e.stopPropagation();
+      if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
       if (window.PortfolioTheme && typeof window.PortfolioTheme.togglePurple === 'function') {
         window.PortfolioTheme.togglePurple();
       }
@@ -835,6 +837,8 @@ Tip: Try typing 'matrix' for cyber visualizer, or 'theme light' / 'theme dark' t
     // Standard theme toggle: Alt + T
     if (e.altKey && (e.key === 't' || e.key === 'T') && !e.ctrlKey) {
       e.preventDefault();
+      e.stopPropagation();
+      if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
       if (window.PortfolioTheme && typeof window.PortfolioTheme.toggle === 'function') {
         window.PortfolioTheme.toggle();
       }

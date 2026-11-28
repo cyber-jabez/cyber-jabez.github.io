@@ -2,7 +2,7 @@
    Jabez Gabrielraj Portfolio - Service Worker (Offline Resilience & PWA)
    ========================================================================== */
 
-const CACHE_NAME = 'jgr-offline-v4.7';
+const CACHE_NAME = 'jgr-offline-v4.9';
 
 const OFFLINE_URL = 'offline.html';
 
@@ -10,12 +10,12 @@ const PRECACHE_ASSETS = [
   './',
   './index.html',
   './offline.html',
-  './styles.css?v=4.7',
+  './styles.css?v=4.9',
   './main.js?v=4.6',
   './grainient.js',
   './blurText.js',
-  './theme.js?v=1.1',
-  './terminal.js?v=1.4',
+  './theme.js?v=1.3',
+  './terminal.js?v=1.6',
   './cursor-pointer.svg',
   './favicon.ico',
   './favicon.png',
@@ -82,7 +82,7 @@ self.addEventListener('fetch', (event) => {
               caches.open(CACHE_NAME).then((cache) => cache.put(req, networkResponse.clone()));
             }
           })
-          .catch(() => {});
+          .catch(() => { });
         return cachedResponse;
       }
 

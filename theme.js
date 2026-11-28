@@ -24,16 +24,16 @@
   }
 
   /**
-   * Show secret HUD notification toast
+   * Show secret HUD notification toast with theme-specific styling
    */
-  function showThemeToast(text) {
+  function showThemeToast(text, themeType = 'purple') {
     let toast = document.getElementById('secretThemeToast');
     if (!toast) {
       toast = document.createElement('div');
       toast.id = 'secretThemeToast';
-      toast.className = 'secret-theme-toast';
       document.body.appendChild(toast);
     }
+    toast.className = `secret-theme-toast theme-toast-${themeType}`;
     toast.innerHTML = `<span class="toast-dot"></span><span>${text}</span><span class="toast-key">[Ctrl+Shift+A]</span>`;
     toast.classList.add('visible');
     clearTimeout(toast._timeout);
@@ -175,21 +175,27 @@
   /**
    * Secret toggle: Ctrl + Shift + A to fully purple theme
    */
-  let lastNonPurpleTheme = localStorage.getItem('last-non-purple-theme') || 'dark';
+  let isThemeTransitioning = false;
 
   function togglePurpleTheme() {
+    if (isThemeTransitioning) return;
+
     const current = document.documentElement.getAttribute(THEME_ATTR) || 'dark';
     let next;
     if (current === 'purple') {
-      next = (lastNonPurpleTheme === 'light' || lastNonPurpleTheme === 'dark') ? lastNonPurpleTheme : 'dark';
-      showThemeToast('PROTOCOL RESTORED: STANDARD THEME');
+      // Unconditionally restore to standard cyber dark theme
+      next = 'dark';
+      showThemeToast('PROTOCOL RESTORED: STANDARD THEME', 'standard');
     } else {
-      lastNonPurpleTheme = current;
-      localStorage.setItem('last-non-purple-theme', current);
       next = 'purple';
-      showThemeToast('SECRET PROTOCOL: CYBER PURPLE ENGAGED');
+      showThemeToast('SECRET PROTOCOL: CYBER PURPLE ENGAGED', 'purple');
     }
+
+    isThemeTransitioning = true;
     switchThemeWithAnimation(next);
+    setTimeout(() => {
+      isThemeTransitioning = false;
+    }, 320);
   }
 
   // Initialize theme as soon as DOM is ready

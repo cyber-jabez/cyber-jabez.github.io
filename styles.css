@@ -4410,13 +4410,9 @@ body.terminal-active .custom-cursor-dot {
   align-items: center;
   gap: 12px;
   padding: 12px 20px;
-  background: rgba(12, 1, 23, 0.94);
-  border: 1px solid rgba(168, 85, 247, 0.55);
   border-radius: 8px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 24px rgba(168, 85, 247, 0.35);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  color: #FAF5FF;
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.08em;
@@ -4432,7 +4428,15 @@ body.terminal-active .custom-cursor-dot {
   transform: translateY(0) scale(1);
 }
 
-.secret-theme-toast .toast-dot {
+/* Toast Theme: Purple */
+.secret-theme-toast.theme-toast-purple {
+  background: rgba(13, 2, 29, 0.95);
+  border: 1px solid rgba(168, 85, 247, 0.65);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 24px rgba(168, 85, 247, 0.4);
+  color: #FAF5FF;
+}
+
+.secret-theme-toast.theme-toast-purple .toast-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -4441,14 +4445,372 @@ body.terminal-active .custom-cursor-dot {
   animation: pulseDot 1.4s infinite ease-in-out;
 }
 
-.secret-theme-toast .toast-key {
+.secret-theme-toast.theme-toast-purple .toast-key {
   color: #C084FC;
-  opacity: 0.85;
+  opacity: 0.9;
   font-size: 10px;
   padding: 2px 6px;
-  border: 1px solid rgba(192, 132, 252, 0.3);
+  border: 1px solid rgba(192, 132, 252, 0.4);
   border-radius: 4px;
-  background: rgba(168, 85, 247, 0.15);
+  background: rgba(168, 85, 247, 0.2);
+  margin-left: 4px;
+}
+
+/* Toast Theme: Standard Cyber Dark */
+.secret-theme-toast.theme-toast-standard {
+  background: rgba(10, 10, 14, 0.96);
+  border: 1px solid rgba(232, 39, 26, 0.55);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 24px rgba(232, 39, 26, 0.35);
+  color: #F5F3EF;
+}
+
+.secret-theme-toast.theme-toast-standard .toast-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #E8271A;
+  box-shadow: 0 0 10px #E8271A, 0 0 3px #FF6B55;
+  animation: pulseDot 1.4s infinite ease-in-out;
+}
+
+.secret-theme-toast.theme-toast-standard .toast-key {
+  color: #FF8577;
+  opacity: 0.9;
+  font-size: 10px;
+  padding: 2px 6px;
+  border: 1px solid rgba(232, 39, 26, 0.4);
+  border-radius: 4px;
+  background: rgba(232, 39, 26, 0.18);
+  margin-left: 4px;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+/* ==========================================================================
+   Secret Purple Theme (Ctrl + Shift + A) Cyber Styling
+   ========================================================================== */
+
+/* Body & Selection */
+[data-theme="purple"] body {
+  background-color: #07000e;
+  background-image: radial-gradient(rgba(192, 132, 252, 0.12) 1px, transparent 1px);
+}
+
+[data-theme="purple"] ::selection {
+  background: #A855F7;
+  color: #FFFFFF;
+}
+
+[data-theme="purple"] :focus-visible {
+  outline: 2px solid #A855F7;
+  outline-offset: 3px;
+}
+
+/* Custom Cursor in Purple Theme */
+[data-theme="purple"] .custom-cursor-dot {
+  background-color: #A855F7 !important;
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.95), 0 0 4px #E9D5FF !important;
+}
+
+/* Scrollbars */
+[data-theme="purple"] ::-webkit-scrollbar-track {
+  background: #07000e;
+}
+
+[data-theme="purple"] ::-webkit-scrollbar-thumb {
+  background: #3B0764;
+}
+
+[data-theme="purple"] ::-webkit-scrollbar-thumb:hover {
+  background: #7E22CE;
+}
+
+/* Hero Fluid Shader Fallback */
+[data-theme="purple"] #heroGrainient.grainient-fallback {
+  background: radial-gradient(circle at 75% 25%, #7E22CE 0%, #3B0764 35%, #150026 70%, #07000E 100%) !important;
+}
+
+/* Giant Name in Footer */
+[data-theme="purple"] .giant-name .char {
+  background: linear-gradient(180deg, #FFFFFF 0%, #E9D5FF 30%, #C084FC 65%, #9333EA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 6px 22px rgba(168, 85, 247, 0.45));
+}
+
+/* Brand Mark / Logo */
+[data-theme="purple"] .brand-mark svg polygon {
+  stroke: #A855F7;
+}
+
+[data-theme="purple"] .brand-mark svg text {
+  fill: #FAF5FF;
+}
+
+[data-theme="purple"] .brand-mark svg rect:first-child {
+  stroke: rgba(168, 85, 247, 0.45);
+}
+
+/* Interactive Card Spotlight Glows */
+[data-theme="purple"] .project-card::before,
+[data-theme="purple"] .case::before,
+[data-theme="purple"] [data-spotlight]::before {
+  background: radial-gradient(520px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+      rgba(168, 85, 247, 0.22),
+      transparent 60%);
+}
+
+[data-theme="purple"] .project-card::after,
+[data-theme="purple"] .case::after,
+[data-theme="purple"] [data-spotlight]::after {
+  background: radial-gradient(380px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+      rgba(192, 132, 252, 0.75),
+      transparent 45%);
+}
+
+[data-theme="purple"] .project-card:hover,
+[data-theme="purple"] .case:hover {
+  border-color: rgba(168, 85, 247, 0.65);
+  box-shadow: 0 16px 40px rgba(168, 85, 247, 0.28);
+}
+
+/* Buttons */
+[data-theme="purple"] .btn.primary {
+  background: #A855F7;
+  color: #FFFFFF;
+  box-shadow: 0 4px 20px rgba(168, 85, 247, 0.45);
+}
+
+[data-theme="purple"] .btn.primary:hover {
+  background: #9333EA;
+  box-shadow: 0 6px 28px rgba(168, 85, 247, 0.65);
+}
+
+[data-theme="purple"] .btn.ghost {
+  border-color: rgba(168, 85, 247, 0.35);
+  color: #FAF5FF;
+}
+
+[data-theme="purple"] .btn.ghost:hover {
+  border-color: #A855F7;
+  background: rgba(168, 85, 247, 0.12);
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.3);
+}
+
+/* Stack Chips & Badges */
+[data-theme="purple"] .stack-chip {
+  background: rgba(168, 85, 247, 0.12);
+  border-color: rgba(168, 85, 247, 0.28);
+  color: #E9D5FF;
+}
+
+[data-theme="purple"] .stack-chip:hover {
+  background: rgba(168, 85, 247, 0.22);
+  border-color: #A855F7;
+  color: #FFFFFF;
+}
+
+/* Horizontal Projects Reel Progress Fill & Ticks */
+[data-theme="purple"] .projects-progress-fill {
+  background: #A855F7;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.8);
+}
+
+[data-theme="purple"] .projects-ticks .tick.active {
+  color: #A855F7;
+  text-shadow: 0 0 8px rgba(168, 85, 247, 0.6);
+}
+
+/* IST Live Time Widget Indicator */
+[data-theme="purple"] #liveIstTimeWidget .ist-dot {
+  background-color: #A855F7;
+  box-shadow: 0 0 10px #A855F7, 0 0 4px #C084FC;
+}
+
+/* Mobile Nav */
+[data-theme="purple"] #mobileNav {
+  background: rgba(7, 0, 14, 0.98);
+  border-left: 1px solid rgba(168, 85, 247, 0.25);
+}
+
+[data-theme="purple"] #mobileNav a:hover,
+[data-theme="purple"] #mobileNav a.active {
+  color: #C084FC;
+}
+
+[data-theme="purple"] #mobileNav a span.nav-idx {
+  color: #A855F7;
+}
+
+/* Cyber Terminal Window in Purple Theme */
+[data-theme="purple"] .cyber-terminal-window {
+  background: #0D021D !important;
+  border: 1px solid rgba(168, 85, 247, 0.65) !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.9), 0 0 36px rgba(168, 85, 247, 0.35) !important;
+}
+
+[data-theme="purple"] .cyber-terminal-header,
+[data-theme="purple"] .cyber-terminal-footer {
+  background: #17042F !important;
+  border-color: rgba(168, 85, 247, 0.25) !important;
+  color: #E9D5FF !important;
+}
+
+[data-theme="purple"] .cyber-term-title-text,
+[data-theme="purple"] .cyber-term-icon {
+  color: #FAF5FF !important;
+}
+
+[data-theme="purple"] .cyber-terminal-body {
+  background: radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.08) 0%, transparent 60%), #0D021D !important;
+  color: #FAF5FF !important;
+}
+
+[data-theme="purple"] .cyber-ascii-art {
+  color: #A855F7 !important;
+  text-shadow: 0 0 10px rgba(168, 85, 247, 0.5) !important;
+}
+
+[data-theme="purple"] .cyber-term-welcome .term-highlight {
+  color: #C084FC !important;
+}
+
+[data-theme="purple"] .cyber-prompt .prompt-user {
+  color: #C084FC !important;
+}
+
+[data-theme="purple"] .cyber-prompt .prompt-at {
+  color: #FAF5FF !important;
+}
+
+[data-theme="purple"] .cyber-prompt .prompt-host {
+  color: #E9D5FF !important;
+}
+
+[data-theme="purple"] .cyber-prompt .prompt-path {
+  color: #A855F7 !important;
+}
+
+[data-theme="purple"] .cyber-prompt .prompt-char {
+  color: #F0ABFC !important;
+}
+
+[data-theme="purple"] .cyber-terminal-input {
+  color: #FAF5FF !important;
+  caret-color: #A855F7 !important;
+}
+
+[data-theme="purple"] .cyber-command-echo {
+  color: #FAF5FF !important;
+}
+
+[data-theme="purple"] .cyber-output-block {
+  color: #FAF5FF !important;
+}
+
+[data-theme="purple"] .cyber-badge-dot {
+  background: #A855F7 !important;
+  box-shadow: 0 0 8px #A855F7 !important;
+}
+
+[data-theme="purple"] .cyber-terminal-footer kbd {
+  background: #250849 !important;
+  color: #FAF5FF !important;
+  border-color: rgba(168, 85, 247, 0.4) !important;
+}
+
+[data-theme="purple"] .cyber-terminal-body::-webkit-scrollbar-thumb {
+  background: rgba(168, 85, 247, 0.35) !important;
+}
+
+[data-theme="purple"] .cyber-terminal-body::-webkit-scrollbar-thumb:hover {
+  background: #A855F7 !important;
+}
+
+/* Secret Theme HUD Toast */
+.secret-theme-toast {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(18px) scale(0.96);
+  pointer-events: none;
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.secret-theme-toast.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Toast Theme: Purple */
+.secret-theme-toast.theme-toast-purple {
+  background: rgba(13, 2, 29, 0.95);
+  border: 1px solid rgba(168, 85, 247, 0.65);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 24px rgba(168, 85, 247, 0.4);
+  color: #FAF5FF;
+}
+
+.secret-theme-toast.theme-toast-purple .toast-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #A855F7;
+  box-shadow: 0 0 10px #A855F7, 0 0 3px #E9D5FF;
+  animation: pulseDot 1.4s infinite ease-in-out;
+}
+
+.secret-theme-toast.theme-toast-purple .toast-key {
+  color: #C084FC;
+  opacity: 0.9;
+  font-size: 10px;
+  padding: 2px 6px;
+  border: 1px solid rgba(192, 132, 252, 0.4);
+  border-radius: 4px;
+  background: rgba(168, 85, 247, 0.2);
+  margin-left: 4px;
+}
+
+/* Toast Theme: Standard Cyber Dark */
+.secret-theme-toast.theme-toast-standard {
+  background: rgba(10, 10, 14, 0.96);
+  border: 1px solid rgba(232, 39, 26, 0.55);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 24px rgba(232, 39, 26, 0.35);
+  color: #F5F3EF;
+}
+
+.secret-theme-toast.theme-toast-standard .toast-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #E8271A;
+  box-shadow: 0 0 10px #E8271A, 0 0 3px #FF6B55;
+  animation: pulseDot 1.4s infinite ease-in-out;
+}
+
+.secret-theme-toast.theme-toast-standard .toast-key {
+  color: #FF8577;
+  opacity: 0.9;
+  font-size: 10px;
+  padding: 2px 6px;
+  border: 1px solid rgba(232, 39, 26, 0.4);
+  border-radius: 4px;
+  background: rgba(232, 39, 26, 0.18);
   margin-left: 4px;
 }
 
