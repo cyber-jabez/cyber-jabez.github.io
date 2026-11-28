@@ -532,7 +532,7 @@ Tip: Try typing 'matrix' for cyber visualizer, or 'theme light' / 'theme dark' t
   <div class="cyber-help-row"><span class="cmd-name">whoami</span><span class="cmd-desc">Display current authenticated identity and security roles</span></div>
   <div class="cyber-help-row"><span class="cmd-name">sysinfo</span><span class="cmd-desc">Display system specs, hardware profile & defense telemetry</span></div>
   <div class="cyber-help-row"><span class="cmd-name">goto &lt;page&gt;</span><span class="cmd-desc">Navigate to section: [home | about | experience | projects | skills | contact | resume]</span></div>
-  <div class="cyber-help-row"><span class="cmd-name">theme &lt;mode&gt;</span><span class="cmd-desc">Switch site theme: 'theme dark', 'theme light', or 'theme toggle'</span></div>
+  <div class="cyber-help-row"><span class="cmd-name">theme &lt;mode&gt;</span><span class="cmd-desc">Switch site & terminal theme: [dark | light | purple | toggle]</span></div>
   <div class="cyber-help-row"><span class="cmd-name">ping [host]</span><span class="cmd-desc">Simulate ICMP gateway latency check (default: gateway)</span></div>
   <div class="cyber-help-row"><span class="cmd-name">matrix</span><span class="cmd-desc">Trigger high-density cyber digital rain sequence</span></div>
   <div class="cyber-help-row"><span class="cmd-name">clear</span><span class="cmd-desc">Clear the terminal output screen</span></div>
@@ -704,16 +704,23 @@ Tip: Try typing 'matrix' for cyber visualizer, or 'theme light' / 'theme dark' t
     if (mode === 'dark') nextTheme = 'dark';
     else if (mode === 'light') nextTheme = 'light';
     else if (mode === 'purple') nextTheme = 'purple';
-    else if (mode === 'toggle') nextTheme = currentTheme === 'purple' ? 'dark' : (currentTheme === 'light' ? 'dark' : 'light');
-    else {
+    else if (mode === 'toggle') {
+      if (currentTheme === 'dark') nextTheme = 'purple';
+      else if (currentTheme === 'purple') nextTheme = 'light';
+      else nextTheme = 'dark';
+    } else {
       printOutput(`usage: theme [dark | light | purple | toggle] (currently: ${currentTheme})`, true);
       return;
     }
 
-    document.documentElement.setAttribute('data-theme', nextTheme);
-    document.documentElement.style.colorScheme = nextTheme === 'light' ? 'light' : 'dark';
-    localStorage.setItem('portfolio-theme', nextTheme);
-    window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: nextTheme } }));
+    if (window.PortfolioTheme && typeof window.PortfolioTheme.set === 'function') {
+      window.PortfolioTheme.set(nextTheme);
+    } else {
+      document.documentElement.setAttribute('data-theme', nextTheme);
+      document.documentElement.style.colorScheme = nextTheme === 'light' ? 'light' : 'dark';
+      localStorage.setItem('portfolio-theme', nextTheme);
+      window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: nextTheme } }));
+    }
 
     printOutput(`[THEME ALTERED] Switched site display theme to: <strong>${nextTheme.toUpperCase()}</strong>`);
   }
@@ -814,6 +821,26 @@ Tip: Try typing 'matrix' for cyber visualizer, or 'theme light' / 'theme dark' t
 
   // Keyboard navigation & Autocomplete
   function handleInputKeydown(e) {
+    const isCtrlOrCmd = e.ctrlKey || e.metaKey;
+
+    // Secret purple theme shortcut: Ctrl + Shift + A or Cmd + Shift + A
+    if (isCtrlOrCmd && e.shiftKey && (e.code === 'KeyA' || e.key.toLowerCase() === 'a')) {
+      e.preventDefault();
+      if (window.PortfolioTheme && typeof window.PortfolioTheme.togglePurple === 'function') {
+        window.PortfolioTheme.togglePurple();
+      }
+      return;
+    }
+
+    // Standard theme toggle: Alt + T
+    if (e.altKey && (e.key === 't' || e.key === 'T') && !e.ctrlKey) {
+      e.preventDefault();
+      if (window.PortfolioTheme && typeof window.PortfolioTheme.toggle === 'function') {
+        window.PortfolioTheme.toggle();
+      }
+      return;
+    }
+
     if (e.key === 'Enter') {
       e.preventDefault();
       const val = terminalInput.value;

@@ -4049,16 +4049,88 @@ body.terminal-active .custom-cursor-dot {
   color: #FFFFFF;
 }
 
-/* Light Theme Adaptations */
+/* Light Theme Terminal Adaptations */
 [data-theme="light"] .cyber-terminal-window {
-  background: #141721;
-  border-color: rgba(232, 39, 26, 0.45);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35), 0 0 32px rgba(232, 39, 26, 0.2);
+  background: #FFFFFF !important;
+  border: 1px solid rgba(217, 35, 23, 0.45) !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55), 0 0 24px rgba(217, 35, 23, 0.15) !important;
 }
 
 [data-theme="light"] .cyber-terminal-header,
 [data-theme="light"] .cyber-terminal-footer {
-  background: #1B1F2D;
+  background: #F0F1F5 !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: #2D3139 !important;
+}
+
+[data-theme="light"] .cyber-term-title-text,
+[data-theme="light"] .cyber-term-icon {
+  color: #1A1D24 !important;
+}
+
+[data-theme="light"] .cyber-terminal-body {
+  background: radial-gradient(circle at 80% 20%, rgba(217, 35, 23, 0.04) 0%, transparent 60%), #F8F9FA !important;
+  color: #14161C !important;
+}
+
+[data-theme="light"] .cyber-ascii-art {
+  color: #D92317 !important;
+}
+
+[data-theme="light"] .cyber-term-meta,
+[data-theme="light"] .cyber-term-welcome {
+  color: #4E525E !important;
+}
+
+[data-theme="light"] .cyber-term-welcome .term-highlight {
+  color: #D92317 !important;
+}
+
+[data-theme="light"] .cyber-prompt .prompt-user {
+  color: #D92317 !important;
+}
+
+[data-theme="light"] .cyber-prompt .prompt-at {
+  color: #0C0D11 !important;
+}
+
+[data-theme="light"] .cyber-prompt .prompt-host {
+  color: #2D3139 !important;
+}
+
+[data-theme="light"] .cyber-prompt .prompt-path {
+  color: #2563EB !important;
+}
+
+[data-theme="light"] .cyber-prompt .prompt-char {
+  color: #D92317 !important;
+}
+
+[data-theme="light"] .cyber-terminal-input {
+  color: #0C0D11 !important;
+  caret-color: #D92317 !important;
+}
+
+[data-theme="light"] .cyber-command-echo {
+  color: #0C0D11 !important;
+}
+
+[data-theme="light"] .cyber-output-block {
+  color: #1A1D24 !important;
+}
+
+[data-theme="light"] .cyber-terminal-footer kbd {
+  background: #E2E4E9 !important;
+  color: #1A1D24 !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+[data-theme="light"] .cyber-terminal-body::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2) !important;
+}
+
+[data-theme="light"] .cyber-terminal-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(217, 35, 23, 0.6) !important;
 }
 
 @media (max-width: 600px) {
@@ -4245,23 +4317,87 @@ body.terminal-active .custom-cursor-dot {
 
 /* Cyber Terminal Window in Purple Theme */
 [data-theme="purple"] .cyber-terminal-window {
-  background: #0C0117;
-  border-color: rgba(168, 85, 247, 0.55);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8), 0 0 36px rgba(168, 85, 247, 0.25);
+  background: #0D021D !important;
+  border: 1px solid rgba(168, 85, 247, 0.65) !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.9), 0 0 36px rgba(168, 85, 247, 0.35) !important;
 }
 
 [data-theme="purple"] .cyber-terminal-header,
 [data-theme="purple"] .cyber-terminal-footer {
-  background: #140226;
-  border-color: rgba(168, 85, 247, 0.25);
+  background: #17042F !important;
+  border-color: rgba(168, 85, 247, 0.25) !important;
+  color: #E9D5FF !important;
+}
+
+[data-theme="purple"] .cyber-term-title-text,
+[data-theme="purple"] .cyber-term-icon {
+  color: #FAF5FF !important;
+}
+
+[data-theme="purple"] .cyber-terminal-body {
+  background: radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.08) 0%, transparent 60%), #0D021D !important;
+  color: #FAF5FF !important;
 }
 
 [data-theme="purple"] .cyber-ascii-art {
-  color: #A855F7;
+  color: #A855F7 !important;
+  text-shadow: 0 0 10px rgba(168, 85, 247, 0.5) !important;
 }
 
-[data-theme="purple"] .cyber-term-prompt {
-  color: #C084FC;
+[data-theme="purple"] .cyber-term-welcome .term-highlight {
+  color: #C084FC !important;
+}
+
+[data-theme="purple"] .cyber-prompt .prompt-user {
+  color: #C084FC !important;
+}
+
+[data-theme="purple"] .cyber-prompt .prompt-at {
+  color: #FAF5FF !important;
+}
+
+[data-theme="purple"] .cyber-prompt .prompt-host {
+  color: #E9D5FF !important;
+}
+
+[data-theme="purple"] .cyber-prompt .prompt-path {
+  color: #A855F7 !important;
+}
+
+[data-theme="purple"] .cyber-prompt .prompt-char {
+  color: #F0ABFC !important;
+}
+
+[data-theme="purple"] .cyber-terminal-input {
+  color: #FAF5FF !important;
+  caret-color: #A855F7 !important;
+}
+
+[data-theme="purple"] .cyber-command-echo {
+  color: #FAF5FF !important;
+}
+
+[data-theme="purple"] .cyber-output-block {
+  color: #FAF5FF !important;
+}
+
+[data-theme="purple"] .cyber-badge-dot {
+  background: #A855F7 !important;
+  box-shadow: 0 0 8px #A855F7 !important;
+}
+
+[data-theme="purple"] .cyber-terminal-footer kbd {
+  background: #250849 !important;
+  color: #FAF5FF !important;
+  border-color: rgba(168, 85, 247, 0.4) !important;
+}
+
+[data-theme="purple"] .cyber-terminal-body::-webkit-scrollbar-thumb {
+  background: rgba(168, 85, 247, 0.35) !important;
+}
+
+[data-theme="purple"] .cyber-terminal-body::-webkit-scrollbar-thumb:hover {
+  background: #A855F7 !important;
 }
 
 /* Secret Theme HUD Toast */
